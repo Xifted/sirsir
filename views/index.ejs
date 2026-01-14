@@ -6,6 +6,12 @@
     <title>SIRSIR HACKER OMG</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
+
+    <meta property="og:title" content="SIRSIR HACKER OMG">
+    <meta property="og:description" content="LIST STEAM UDAH UDAH">
+    <meta property="og:image" content="https://cdn.discordapp.com/emojis/1199139517198770206.png?size=1024&quality=lossless">
+    <meta property="og:url" content="https://sirsirhackeromg.randomflies.my.id">
+    <meta property="og:type" content="website">
 </head>
 
 <body>
@@ -57,7 +63,8 @@
                                     order==='ASC' ) { cdNextOrder='desc' ; } else if (sort==='cooldown' &&
                                     order==='DESC' ) { cdNextSort='' ; } %>
 
-                                    <a href="<%= cdNextSort ? '/?page=' + page + '&sort=' + cdNextSort + '&order=' + cdNextOrder : '/?page=' + page %>">
+                                    <a
+                                        href="<%= cdNextSort ? '/?page=' + page + '&sort=' + cdNextSort + '&order=' + cdNextOrder : '/?page=' + page %>">
                                         Cooldown
                                         <% if (sort==='cooldown' ) { %>
                                             <span class="sort-indicator">
