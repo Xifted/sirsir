@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SIRSIR HACKER OMG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="panel">
+
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-text">
+                    <h1>SIRSIR</h1>
+                    <span>STEAM UDAH UDAH</span>
+                </div>
+                <img src="https://cdn.discordapp.com/emojis/1199139517198770206.png?size=1024&quality=lossless"
+                    alt="Hero" class="hero-spin" />
+            </header>
+
+            <!-- ADD FORM -->
+            <form class="add-form" action="/add" method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button class="btn">Add Account</button>
+            </form>
+
+            <!-- TABLE -->
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <% var userNextSort='user' ; var userNextOrder='asc' ; if (sort==='user' &&
+                                    order==='ASC' ) { userNextOrder='desc' ; } else if (sort==='user' && order==='DESC'
+                                    ) { userNextSort='' ; } %>
+
+                                    <a
+                                        href="<%= userNextSort ? '/?page=' + page + '&sort=' + userNextSort + '&order=' + userNextOrder : '/?page=' + page %>">
+                                        User
+                                        <% if (sort==='user' ) { %>
+                                            <span class="sort-indicator">
+                                                <%= order==='ASC' ? '▲' : '▼' %>
+                                            </span>
+                                            <% } %>
+                                    </a>
+                            </th>
+                            <th>Password</th>
+                            <th>Status</th>
+                            <th>
+                                <% var cdNextSort='cooldown' ; var cdNextOrder='asc' ; if (sort==='cooldown' &&
+                                    order==='ASC' ) { cdNextOrder='desc' ; } else if (sort==='cooldown' &&
+                                    order==='DESC' ) { cdNextSort='' ; } %>
+
+                                    <a href="<%= cdNextSort ? '/?page=' + page + '&sort=' + cdNextSort + '&order=' + cdNextOrder : '/?page=' + page %>">
+                                        Cooldown
+                                        <% if (sort==='cooldown' ) { %>
+                                            <span class="sort-indicator">
+                                                <%= order==='ASC' ? '▲' : '▼' %>
+                                            </span>
+                                            <% } %>
+                                    </a>
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        <% accounts.forEach(a=> { %>
+                            <tr>
+                                <td>
+                                    <%= a.username %>
+                                </td>
+
+                                <td>
+                                    <span class="pwd" data-pwd="<%= a.password %>">••••••</span>
+                                    <button class="btn small" onclick="copy(this)">COPY</button>
+                                </td>
+
+                                <td class="status <%= a.display_status.toLowerCase() %>">
+                                    <%= a.display_status %>
+                                </td>
+
+                                <td>
+                                    <% if(a.display_status==='COOLDOWN' ){ %>
+                                        <small>From</small>
+                                        <%= a.cooldown_start %><br>
+                                            <small>To</small>
+                                            <%= a.cooldown_until %>
+                                                <% } else { %>
+
+                                                    <% } %>
+                                </td>
+
+                                <td>
+                                    <div class="actions">
+
+                                        <!-- COOLDOWN -->
+                                        <button type="button" class="btn cooldown-btn" data-id="<%= a.id %>">
+                                            Cooldown
+                                        </button>
+
+                                        <form method="POST" action="/action">
+                                            <input type="hidden" name="id" value="<%= a.id %>">
+                                            <button class="btn secondary" name="type" value="RESET">Reset</button>
+                                            <button class="btn danger" name="type" value="BANNED">Ban</button>
+                                            <button class="btn danger" name="type" value="DELETE">Delete</button>
+                                        </form>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="pagination-wrapper">
+                <ul class="pagination">
+                    <% for(let i=1; i <=totalPages; i++){ %>
+                        <li class="<%= page === i ? 'active' : '' %>">
+                            <a href="/?page=<%= i %>&sort=<%= sort %>&order=<%= order.toLowerCase() %>">
+                                <%= i %>
+                            </a>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- COOLDOWN DROPDOWN -->
+    <div id="cooldown-menu" class="floating-dropdown hidden">
+        <form method="POST" action="/action">
+            <input type="hidden" name="id" id="cooldown-id">
+            <input type="hidden" name="type" value="COOLDOWN">
+
+            <button name="hours" value="20">20 Jam</button>
+            <button name="hours" value="168">7 Hari</button>
+            <button name="hours" value="720">1 Bulan</button>
+
+            <input type="number" name="hours" min="1" placeholder="Custom (jam)">
+            <button class="full">Set</button>
+        </form>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+
+</html>

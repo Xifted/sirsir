@@ -1,0 +1,12 @@
+CREATE DATABASE sirsir;
+USE sirsir;
+
+CREATE TABLE accounts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(100) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  status ENUM('READY','COOLDOWN','BANNED') DEFAULT 'READY',
+  cooldown_until DATETIME NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  cooldown_start DATETIME NULL
+);
