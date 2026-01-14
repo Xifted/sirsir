@@ -38,7 +38,7 @@ This project uses a template environment file.
 Copy the example environment file:
 
 ```bash
-cp copy.env .env
+cp .env.example .env
 ```
 
 Then adjust values inside `.env` if needed.
